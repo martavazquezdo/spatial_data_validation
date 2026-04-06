@@ -1,51 +1,31 @@
 # Spatial Data Validation Pipeline
 
-## Overview
-
-This project implements a modular pipeline for **data validation of meteorological observations**, with a strong focus on **spatial consistency analysis**.
-
-It is designed to:
-
-* detect inconsistencies in environmental data
-* structure issues in a reproducible way
-* provide both analytical and spatial outputs
-* support visual inspection using GIS tools (e.g. QGIS)
+A modular Python pipeline for validating meteorological station data, with a focus on spatial consistency analysis and geospatial workflows.
 
 ---
 
-## Objectives
+## Objective
 
-The project prioritizes:
+Detect spatial inconsistencies in environmental data and transform them into structured outputs that support:
 
-* clear and reproducible validation logic
-* structured issue reporting
-* integration with geospatial workflows
-* practical usability over excessive complexity
-
----
-
-## Pipeline Structure
-
-The pipeline is organized into the following steps:
-
-1. **Input & preprocessing**
-2. **Spatial validation**
-3. **Issue generation**
-4. **Reporting**
-5. **Optional GIS export**
+* issue prioritization
+* spatial analysis of anomalies
+* integration with GIS-based workflows
 
 ---
 
-## Spatial Validation
+## Validation Approach
 
-The core of the project is a spatial validation module that:
+The pipeline applies validation focused on **spatial consistency**, complementing traditional QA checks.
 
-* estimates expected values from neighboring stations
-* computes residuals (observed vs expected)
-* detects anomalies based on configurable thresholds
-* classifies severity levels
+### Spatial Consistency
 
-It supports different estimation methods:
+* estimation of expected values using neighboring stations
+* computation of residuals (observed vs expected)
+* anomaly detection based on configurable thresholds
+* classification of severity levels
+
+Supported estimation methods:
 
 * median (default)
 * mean
@@ -55,13 +35,13 @@ It supports different estimation methods:
 
 ## Outputs
 
-### 1. Structured issues
+The system generates:
 
-* anomalies detected
+### 1. Structured Issues
+
+* detected spatial anomalies
 * metadata (station, timestamp, residual, severity)
 * number of neighbors used
-
----
 
 ### 2. Reporting
 
@@ -69,71 +49,74 @@ It supports different estimation methods:
 * station-level overview
 * human-readable report
 
----
-
-### 3. GIS outputs (optional)
-
-Generated files:
+### 3. GIS Outputs (optional)
 
 * `stations.geojson` → observation points
 * `spatial_issues.geojson` → detected anomalies
 * `interpolated_surface.tif` → interpolated spatial surface
 
-These can be directly loaded into GIS software for visual inspection.
+These outputs can be directly visualized in GIS tools (e.g. QGIS).
 
 ---
 
-## Key Insight
+## System Design
 
-During development, a **boundary-related bias** was identified:
-
-Stations located near the edges of the spatial domain may show artificially high residuals due to reduced neighbor support.
-
-This behavior is:
-
-* expected from the interpolation method
-* documented
-* considered for future improvements
-
----
-
-## How to Run
-
-```bash
-python spatial_pipelines.py
-```
-
-Make sure configuration paths and flags are correctly set.
-
----
-
-## Tests
-
-The project includes:
-
-* unit tests for spatial validation logic
-* smoke test for pipeline execution
-
-Run tests with:
-
-```bash
-pytest
-```
+* modular architecture (extraction, preprocessing, validation, reporting)
+* separation between analytical validation and GIS outputs
+* configurable validation thresholds
+* designed for integration with geospatial workflows
 
 ---
 
 ## Project Structure
 
-```
+```text id="3v7zt1"
 src/
-    validation/
-        spatial_validation.py
-        spatial_layers.py
-
-tests/
-    test_spatial_validation.py
-    test_spatial_pipeline_smoke.py
+├── extraction/
+├── preprocessing/
+├── validation/
+├── reporting/
+├── utils/
 ```
+
+---
+
+## Execution
+
+```bash id="drp4hm"
+python -m src.spatial_pipelines
+```
+
+Ensure configuration paths and execution flags are properly defined.
+
+---
+
+## Testing & CI
+
+The project includes:
+
+* unit tests for spatial validation logic
+* a smoke test for end-to-end pipeline execution
+
+Run tests with:
+
+```bash id="7q5kcf"
+pytest
+```
+
+---
+
+## Key Insight
+
+During development, a boundary-related bias was identified:
+
+Stations located near the edges of the spatial domain may show artificially high residuals due to reduced neighbor support.
+
+This behavior is:
+
+* inherent to the interpolation approach
+* explicitly documented
+* considered for future improvements
 
 ---
 
@@ -146,6 +129,7 @@ tests/
 
 ---
 
-## Author
+## Context
 
-Developed as part of a data validation portfolio focused on environmental and geospatial data.
+This project extends data validation approaches to the spatial domain, combining analytical checks with geospatial outputs for improved interpretability and operational use.
+
