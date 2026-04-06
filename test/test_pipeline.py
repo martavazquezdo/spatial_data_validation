@@ -10,7 +10,7 @@ def test_spatial_pipeline_smoke(tmp_path, monkeypatch):
     # 1. Create minimal input observation CSV
     # ============================================================
     obs_df = pd.DataFrame({
-        "Estacion": ["A", "B", "C", "D"],
+        "Nombre señal": ["A", "B", "C", "D"],
         "Fecha": [
             "2026-01-01 00:00:00",
             "2026-01-01 00:00:00",
@@ -18,6 +18,7 @@ def test_spatial_pipeline_smoke(tmp_path, monkeypatch):
             "2026-01-01 00:00:00",
         ],
         "Valor": [10.0, 11.0, 10.5, 30.0],
+        "Calidad": [1, 1, 1, 1],
     })
 
     obs_path = tmp_path / "obs.csv"
